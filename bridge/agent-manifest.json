@@ -1,0 +1,11 @@
+{
+  "networks": [
+    {
+      "name": "pasar_pagi"
+    }
+  ],
+  "actions": {
+    "version": 1,
+    "module": "./bridge-actions.js"
+  }
+}

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pasar Pagi Cilacap — Belanja Sayur, Buah &amp; Sembako</title>
+  <meta name="description" content="Pasar Pagi Cilacap: daftar lapak dan harga harian sayur, buah, daging, bumbu, dan sembako. Pesan demo, ambil sendiri atau diantar.">
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="script.js"></script>
+  <script type="module" src="site.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <p class="eyebrow">Pasar tradisional &middot; Cilacap, Jawa Tengah</p>
+      <h1>Pasar Pagi</h1>
+      <p class="tagline">Sayur, buah, daging, dan sembako segar dari lapak-lapak langganan.
+        Pilih barang, masukkan ke keranjang, lalu pesan — ambil sendiri atau diantar.</p>
+      <p class="demo-banner" id="catatan-demo" role="note">Demo: harga di halaman ini harga contoh,
+        pesanan tidak sungguhan, dan tidak ada pembayaran.</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section aria-labelledby="katalog-judul">
+      <h2 id="katalog-judul">Katalog hari ini</h2>
+      <p class="muted" id="harga-info">Memuat harga&hellip;</p>
+
+      <div class="toolbar">
+        <label class="search">
+          <span class="visually-hidden">Cari barang</span>
+          <input type="search" id="cari" placeholder="Cari: cabe, beras, pisang&hellip;" autocomplete="off">
+        </label>
+        <div class="chips" id="filter-kategori" role="group" aria-label="Filter kategori"></div>
+      </div>
+
+      <p class="muted" id="hasil-info" aria-live="polite"></p>
+      <div class="grid" id="katalog"></div>
+      <p class="muted" id="katalog-kosong" hidden>Tidak ada barang yang cocok. Coba kata kunci atau kategori lain.</p>
+    </section>
+
+    <section aria-labelledby="keranjang-judul" class="card">
+      <h2 id="keranjang-judul">Keranjang</h2>
+      <p class="muted" id="keranjang-kosong">Keranjang masih kosong. Tambahkan barang dari katalog.</p>
+      <ul id="keranjang-items"></ul>
+      <p class="total">Total: <strong id="keranjang-total">Rp0</strong></p>
+      <p class="muted" id="keranjang-status" aria-live="polite"></p>
+    </section>
+
+    <section aria-labelledby="checkout-judul" class="card">
+      <h2 id="checkout-judul">Pesan (demo)</h2>
+      <form id="checkout-form">
+        <label>Nama
+          <input type="text" name="nama" id="nama" autocomplete="name" placeholder="Nama Anda">
+        </label>
+        <label>Cara terima
+          <select name="cara" id="cara">
+            <option value="ambil">Ambil sendiri di pasar</option>
+            <option value="antar">Diantar ke alamat</option>
+          </select>
+        </label>
+        <label id="alamat-wrap" hidden>Alamat antar
+          <input type="text" name="alamat" id="alamat" autocomplete="street-address" placeholder="Jalan, nomor rumah, RT/RW">
+        </label>
+        <label>Jam
+          <select name="jam" id="jam">
+            <option value="06:00">06:00</option>
+            <option value="07:00">07:00</option>
+            <option value="08:00">08:00</option>
+            <option value="09:00">09:00</option>
+            <option value="10:00">10:00</option>
+            <option value="11:00">11:00</option>
+            <option value="12:00">12:00</option>
+            <option value="13:00">13:00</option>
+            <option value="14:00">14:00</option>
+            <option value="15:00">15:00</option>
+            <option value="16:00">16:00</option>
+            <option value="17:00">17:00</option>
+            <option value="18:00" selected>18:00</option>
+          </select>
+        </label>
+        <p class="muted">Pesanan demo: tidak ada barang yang benar-benar dikirim dan tidak ada pembayaran.</p>
+        <button type="submit" id="pesan-btn" disabled>Pesan sekarang</button>
+      </form>
+    </section>
+
+    <section id="konfirmasi" class="card konfirmasi" hidden tabindex="-1" aria-labelledby="konfirmasi-judul">
+      <h2 id="konfirmasi-judul">Pesanan diterima (demo)</h2>
+      <p id="konfirmasi-ringkasan"></p>
+      <ul id="konfirmasi-items"></ul>
+      <p class="total">Total: <strong id="konfirmasi-total"></strong></p>
+      <p class="muted">Ini pesanan demo. Simpan nomor pesanan di atas bila ingin mengeceknya kembali.</p>
+    </section>
+
+    <section aria-labelledby="riwayat-judul" class="card">
+      <h2 id="riwayat-judul">Pesanan terakhir</h2>
+      <p class="muted" id="riwayat-kosong">Belum ada pesanan demo di perangkat ini.</p>
+      <ul id="riwayat-items"></ul>
+    </section>
+
+    <section id="assistant" class="assistant" aria-labelledby="assistant-heading">
+      <h2 id="assistant-heading">Tanya Pasar Pagi</h2>
+      <p>Tanya harga dan stok, isi keranjang, atau buat pesanan demo — asisten menjawab dari data pasar hari ini.</p>
+      <p class="assistant-note">Pesan Anda dan data halaman ini dikirim ke penyedia LLM yang Anda pilih di pengaturan di bawah. Anda mengonfirmasi dulu sebelum pesanan yang tidak bisa dibatalkan dibuat.</p>
+      <p id="assistant-status" role="status">Menghubungkan asisten… Jika pesan ini tetap ada, asisten gagal dimuat. Anda tetap bisa memakai halaman ini langsung.</p>
+      <div id="agent-app">
+        <div data-ns-slot="header"></div>
+        <div class="assistant-panels">
+          <div data-ns-slot="chat"></div>
+          <div data-ns-slot="agents"></div>
+        </div>
+        <div data-ns-slot="settings"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p id="jam-buka">Pasar Pagi Cilacap &middot; Buka 04:00&ndash;12:00 WIB setiap hari.</p>
+      <p class="muted">Situs demo untuk Open Agentic Web Challenge. Harga contoh, bukan harga pasar sungguhan.
+        Tidak ada pembayaran. Pesan yang Anda kirim ke asisten diteruskan ke penyedia LLM yang Anda pilih
+        di pengaturan model.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

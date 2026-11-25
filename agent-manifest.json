@@ -1,0 +1,80 @@
+{
+  "actions": {
+    "agentTools": [
+      "get_market_state",
+      "add_to_cart",
+      "set_cart",
+      "checkout_demo_order"
+    ],
+    "bridge": "./bridge/action-bridge.html",
+    "module": "./site-actions.js",
+    "version": 1
+  },
+  "agent_mcp": {
+    "available": false,
+    "front_man": "koordinator_pasar",
+    "network": "pasar_pagi",
+    "protocol": "nsdeploy-agent-mcp/v1",
+    "reason": "This is a static bundle; a public MCP facade requires an application host."
+  },
+  "allowed_peers": [],
+  "brand": "Pasar Pagi",
+  "deployment": {
+    "browser_mock": false,
+    "direct_byok": true,
+    "direct_mcp_requires_cors": true,
+    "mode": "static",
+    "public_mcp_facade": false,
+    "self_contained_runtime": true
+  },
+  "linking": {
+    "exports": [
+      {
+        "aliases": [
+          "pasar_pagi",
+          "koordinator_pasar"
+        ],
+        "front_man": "koordinator_pasar",
+        "network": "pasar_pagi",
+        "url": "pasar_pagi"
+      }
+    ],
+    "imports": [],
+    "link_updates": {
+      "mode": "browser-local"
+    },
+    "protocol": "nsdeploy-link/v1"
+  },
+  "llm_router": {
+    "base_url": "https://api.otari.ai/api/v1",
+    "byok_router": "https://api.otari.ai/api/v1",
+    "mock": false
+  },
+  "networks": [
+    {
+      "description": "Tanya harga dan stok, isi keranjang, dan buat pesanan demo di Pasar Pagi Cilacap.",
+      "front_man": "koordinator_pasar",
+      "hocon": "./pasar_pagi.network.json",
+      "name": "pasar_pagi",
+      "sample_queries": [
+        "Cabe rawit sekilo berapa, dan dari lapak mana?",
+        "Buah apa saja yang harganya di bawah Rp20.000 per kg?",
+        "Tambahkan 2 kg beras premium ke keranjang.",
+        "Tambahkan 2 kg beras premium dan 1 kg cabe rawit ke keranjang, lalu buatkan pesanan demonya atas nama Budi, ambil sendiri jam 18:00.",
+        "Tolong batalkan pesanan demo saya kemarin.",
+        "Saya mau bayar pesanan ini pakai QRIS, bisa?"
+      ],
+      "tags": [
+        "agentified-website"
+      ]
+    }
+  ],
+  "peer_policy": {
+    "deny_origins": [],
+    "mode": "closed",
+    "note": "Local agents and page-local actions only. No partner sites yet."
+  },
+  "theme": {
+    "primary": "#2e5e3a"
+  }
+}

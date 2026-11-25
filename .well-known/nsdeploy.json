@@ -1,0 +1,18 @@
+{
+  "exports": [
+    {
+      "aliases": [
+        "pasar_pagi",
+        "koordinator_pasar"
+      ],
+      "front_man": "koordinator_pasar",
+      "network": "pasar_pagi",
+      "url": "pasar_pagi"
+    }
+  ],
+  "imports": [],
+  "link_updates": {
+    "mode": "browser-local"
+  },
+  "protocol": "nsdeploy-link/v1"
+}

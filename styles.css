@@ -1,0 +1,273 @@
+:root {
+  --hijau: #2e5e3a;
+  --hijau-tua: #1f4429;
+  --terakota: #b4552d;
+  --terakota-tua: #933f1f;
+  --krem: #faf6ee;
+  --kertas: #fffdf7;
+  --teks: #2b2620;
+  --muted: #6f675c;
+  --garis: #e4dccb;
+  --kuning: #f2c94c;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--krem);
+  color: var(--teks);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.55;
+}
+
+.wrap { max-width: 960px; margin: 0 auto; padding: 0 1rem; }
+
+.site-header {
+  background: var(--hijau);
+  color: #fff;
+  padding: 2rem 0 1.5rem;
+}
+.site-header h1 { margin: 0.25rem 0; font-size: 2.2rem; line-height: 1.1; }
+.eyebrow { margin: 0; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.8rem; color: var(--kuning); }
+.tagline { margin: 0.5rem 0 0; max-width: 34rem; }
+.demo-banner {
+  margin: 1rem 0 0;
+  padding: 0.6rem 0.9rem;
+  background: #fff3cd;
+  color: #5c4a00;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+}
+
+main { padding-bottom: 2rem; }
+h2 { margin: 1.75rem 0 0.5rem; color: var(--hijau-tua); }
+.muted { color: var(--muted); font-size: 0.92rem; }
+
+.toolbar { display: flex; flex-direction: column; gap: 0.75rem; margin: 1rem 0; }
+.search input {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  font: inherit;
+  border: 1px solid var(--garis);
+  border-radius: 0.5rem;
+  background: var(--kertas);
+}
+.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.chip {
+  padding: 0.4rem 0.85rem;
+  border: 1px solid var(--hijau);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--hijau);
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.chip[aria-pressed="true"] { background: var(--hijau); color: #fff; }
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.9rem;
+}
+@media (min-width: 560px) { .grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 860px) { .grid { grid-template-columns: 1fr 1fr 1fr; } }
+
+.barang {
+  background: var(--kertas);
+  border: 1px solid var(--garis);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.barang h3 { margin: 0; font-size: 1.05rem; }
+.barang .harga { font-weight: 700; color: var(--terakota); font-size: 1.1rem; }
+.barang .lapak { font-size: 0.85rem; color: var(--muted); }
+.barang .ket { font-size: 0.9rem; margin: 0; }
+.barang .stok { font-size: 0.85rem; color: var(--muted); }
+.barang .stok.habis { color: #a11; font-weight: 700; }
+.barang .aksi { margin-top: auto; display: flex; gap: 0.5rem; align-items: center; }
+.barang .aksi button {
+  padding: 0.5rem 0.9rem;
+  border: none;
+  border-radius: 0.5rem;
+  background: var(--terakota);
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.barang .aksi button:hover { background: var(--terakota-tua); }
+.barang .aksi button:disabled { background: #b9b2a4; cursor: not-allowed; }
+
+.card {
+  background: var(--kertas);
+  border: 1px solid var(--garis);
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  margin-top: 1.5rem;
+}
+.card h2 { margin-top: 0; }
+
+#keranjang-items, #konfirmasi-items, #riwayat-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#keranjang-items li, #konfirmasi-items li, #riwayat-items li {
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--garis);
+}
+#keranjang-items li:last-child, #riwayat-items li:last-child { border-bottom: none; }
+
+.baris-keranjang { display: flex; justify-content: space-between; gap: 0.5rem; }
+.kontrol-jumlah { display: flex; gap: 0.4rem; align-items: center; margin-top: 0.3rem; }
+.kontrol-jumlah button {
+  min-width: 2rem;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--garis);
+  border-radius: 0.4rem;
+  background: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+.kontrol-jumlah button.hapus { color: #a11; border-color: #e0b4b4; }
+
+.total { font-size: 1.1rem; }
+
+form label { display: block; margin-bottom: 0.9rem; font-weight: 600; }
+form input, form select {
+  display: block;
+  width: 100%;
+  margin-top: 0.3rem;
+  padding: 0.65rem 0.8rem;
+  font: inherit;
+  font-weight: 400;
+  border: 1px solid var(--garis);
+  border-radius: 0.5rem;
+  background: #fff;
+}
+form button[type="submit"] {
+  padding: 0.75rem 1.4rem;
+  border: none;
+  border-radius: 0.5rem;
+  background: var(--hijau);
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+form button[type="submit"]:hover { background: var(--hijau-tua); }
+form button[type="submit"]:disabled { background: #b9b2a4; cursor: not-allowed; }
+
+.konfirmasi { border: 2px solid var(--hijau); }
+
+.site-footer {
+  border-top: 1px solid var(--garis);
+  padding: 1.5rem 0 2rem;
+  font-size: 0.9rem;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Assistant layout. Dari templates/assistant.css, warna disesuaikan ke palet pasar. */
+.assistant { margin-top: 48px; }
+
+/* Runtime membaca variabel ini untuk chat, pengaturan, dan panel agen.
+   Teks putih duduk di atas --ns-primary dan --ns-accent, jadi keduanya gelap. */
+#agent-app {
+  --ns-font: system-ui, sans-serif;
+  --ns-bg: #fffdf7;
+  --ns-fg: #2b2620;
+  --ns-primary: #2e5e3a;
+  --ns-accent: #933f1f;
+  --ns-border: #e4dccb;
+  --ns-panelbg: #fffdf7;
+  --ns-msgbg: #faf6ee;
+  --ns-muted: #6f675c;
+}
+
+.assistant-panels {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 240px;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+/* Set the height once the runtime has mounted the chat, so a failed load leaves no
+   empty box. */
+#agent-app.ns-composed-app [data-ns-slot="chat"] { height: 720px; }
+/* The runtime gives the chat no background of its own. Keep --ns-msgbg different from
+   --ns-bg, or bot replies lose their bubble. */
+#agent-app .ns-chat { background: var(--ns-bg); }
+
+/* Site-wide form rules often stretch the runtime's own controls. Undo them here. */
+#agent-app input[type="checkbox"],
+#agent-app input[type="radio"] { width: auto; }
+#agent-app .ns-header { flex-wrap: wrap; }
+/* Site label rules add margins and bold text, and the inputs inside the labels inherit
+   the weight. */
+#agent-app .ns-settings-body label { margin: 4px 0; font-weight: 400; }
+/* Chat forms label radio groups with a legend, so site legend fonts would reach them. */
+#agent-app .ns-w-label { font-family: inherit; }
+/* Site label rules add margins to chat form fields and make their options bold. */
+#agent-app .ns-widget label { margin: 0; }
+#agent-app .ns-w-radio label,
+#agent-app .ns-w-multi label,
+#agent-app .ns-w-toggle { font-weight: 400; }
+/* The runtime sizes radio and multi-choice options but not the checkbox label. */
+#agent-app .ns-w-toggle { font-size: 13px; }
+/* The runtime spaces its buttons with gap. A site's button margin pushes Send below the input. */
+#agent-app button { margin: 0; }
+/* Chat choices are buttons with a light background. A site's button color can hide their
+   titles. */
+#agent-app .ns-w-choice { color: var(--ns-fg); }
+/* A site's button:hover background also reaches the runtime's plain buttons, behind
+   their dark text. Keep the runtime's own backgrounds. */
+#agent-app .ns-devtoggle:not(.on):hover,
+#agent-app .ns-modal-close:hover { background: transparent; }
+#agent-app .ns-w-choice:disabled:hover { background: #fafbfc; }
+/* The runtime's message rule hides the partner consent card's own background, and its
+   Decline label then has too little contrast. */
+#agent-app .ns-consent { background: #fffbeb; }
+/* While a consent card waits, the status line above it already says "Contacting", though
+   nothing has been sent. Hide it until the visitor answers. */
+#agent-app .ns-msgs:has(.ns-consent-actions) > .ns-turn-status { display: none; }
+/* Long links in a reply would run out of the bubble on a phone. "anywhere" would also
+   let the consent card's buttons shrink and split their labels. */
+#agent-app .ns-msg { overflow-wrap: break-word; }
+/* On a phone the consent card is too narrow for its three buttons in one row, and
+   "Always allow" breaks onto two lines. Keep each label whole and wrap the row. */
+#agent-app .ns-consent-actions { flex-wrap: wrap; }
+#agent-app .ns-consent-actions button { white-space: nowrap; }
+
+/* site.js and the runtime add their confirmation dialogs to <body>, outside #agent-app.
+   Site h2 rules reach the heading, and the two buttons touch. A right margin keeps
+   wrapped buttons lined up on the left. */
+body > dialog h2 { margin: 0 0 12px; font: 700 1.25em system-ui, sans-serif; }
+body > dialog button { margin-right: 8px; }
+/* site.js's dialog: the details in two columns, and a plain decline button, so the two
+   choices do not look the same. */
+.assistant-review { max-width: 640px; width: 85%; max-height: 85vh; overflow: auto; border: 1px solid #888; border-radius: 12px; padding: 24px; font: 16px system-ui, sans-serif; }
+.assistant-review dl { display: grid; grid-template-columns: fit-content(40%) 1fr; gap: 4px 16px; margin: 12px 0; }
+.assistant-review dt { font-weight: 600; }
+.assistant-review dd { margin: 0; overflow-wrap: anywhere; }
+.assistant-review details { margin: 12px 0; }
+.assistant-review pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+.assistant-review .assistant-decline { background: transparent; color: inherit; border: 1px solid currentColor; }
+
+@media (max-width: 760px) {
+  .assistant-panels { grid-template-columns: 1fr; }
+  /* On a phone, each detail goes under its label, so an email is not split. */
+  .assistant-review dl { grid-template-columns: 1fr; gap: 0; }
+  .assistant-review dd { margin-bottom: 8px; }
+}
