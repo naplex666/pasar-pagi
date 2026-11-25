@@ -1068,6 +1068,41 @@ class AgentifiedSiteTest {
   }
 
   /**
+   * A delivery demo order with a full address succeeds through the action.
+   * The live failure on 25 Nov 2026 was a delivery order ("antar jam 10 pagi")
+   * whose confirmation dialog never opened because render_cruse kept failing,
+   * and whose request carried no address at all. This covers the delivery path
+   * end to end at the action level, with the address that request was missing.
+   * The render_cruse shape itself is covered by tests/cruse-shapes.test.mjs,
+   * since render_cruse only runs in the browser.
+   */
+  static async testApprovedDeliveryCheckout() {
+    const loaded = await AgentifiedSiteTest.load();
+    const registry = await AgentifiedSiteTest.registry();
+    const ctx = AgentifiedSiteTest.context(loaded, registry, new ScriptedModel([]), AgentifiedSiteTest.approve);
+    const entry = await AgentifiedSiteTest.tool(loaded, ctx, IRREVERSIBLE_ACTION);
+    await AgentifiedSiteTest.arrangeIrreversibleState(registry);
+    const before = await AgentifiedSiteTest.readState(registry);
+    AgentifiedSiteTest.clearFocus();
+    const receipt = await dispatchToolCall(ctx, entry, {
+      customerName: "Budi",
+      cara: "antar",
+      address: "Jl. Pahonjean No. 12, Cilacap 53257",
+      jam: "10:00",
+      expectedCartVersion: before.cartVersion,
+    }, null, []);
+    assert.equal(receipt.status, "succeeded");
+    assert.notEqual(receipt.result.ok, false, receipt.result.reason);
+    assert.match(receipt.result.order.id, /^PP-\d{8}-[A-Z0-9]{4}$/);
+    assert.equal(receipt.result.order.status, "Diterima (demo)");
+    assert.equal(receipt.result.order.cara, "antar");
+    assert.equal(receipt.result.order.alamat, "Jl. Pahonjean No. 12, Cilacap 53257");
+    assert.equal(receipt.result.order.jam, "10:00");
+    assert.deepEqual((await AgentifiedSiteTest.readState(registry)).latestOrder, receipt.result.order);
+    assert.deepEqual((await AgentifiedSiteTest.readState(registry)).cart, []);
+  }
+
+  /**
    * The bridge shares only the catalog read, as a bridge read of public facts,
    * and nothing else.
    */
@@ -1104,3 +1139,4 @@ test("a visitor typing in the page's form keeps focus when a consent card appear
 test("the bridge shares only the catalog read", AgentifiedSiteTest.testBridgeSharesOnlyTheCatalogRead);
 // This one changes the page for good, so it runs last.
 test("an approved irreversible call stores the record", AgentifiedSiteTest.testApprovedIrreversibleCall);
+test("an approved delivery checkout with a full address stores the record", AgentifiedSiteTest.testApprovedDeliveryCheckout);

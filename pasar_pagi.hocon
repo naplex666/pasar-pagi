@@ -78,10 +78,14 @@ Component kinds and their fields:
 - table: columns (list of strings) and rows (lists of scalars, one value per column).
 - choice: options, each with title, value and optional subtitle and meta.
 - form: schema with type "object", properties (each with a title) and required, plus submitLabel. Field types: string, integer, number, boolean, string with enum, string with format "date" or "time", array with items.enum. An enum field may add "x-ui" with "enumLabels" (readable names, in enum order) or "widget": "radio". Use default only for values you already know.
-- info: fields, an object of label to value.
+- info: fields, an object of label to value. fields MUST be an object like {"Nama": "Budi", "Jam": "10:00"} — never a list, never a plain text string, and never omitted. A component with only text and no fields object is invalid: use kind "report" with markdown instead.
 - report: markdown.
 - chart: chartType "bar" or "line", labels, series (each with name and values), summary, optional unit. Use only numbers from tool results.
 - html: headings, lists, tables and links only. No scripts, styles, images or form controls.
+Valid examples (copy these shapes exactly, changing only the values):
+- Summary: {"version":1,"components":[{"kind":"info","id":"ringkasan","title":"Ringkasan pesanan","fields":{"Nama":"Budi","Cara terima":"Antar","Jam":"10:00"}}]}
+- Collecting missing order details: {"version":1,"components":[{"kind":"form","id":"data-pesanan","title":"Lengkapi pesanan demo","schema":{"type":"object","properties":{"nama":{"type":"string","title":"Nama"},"alamat":{"type":"string","title":"Alamat lengkap"},"jam":{"type":"string","title":"Jam (JJ:MM)","format":"time"}},"required":["nama","alamat","jam"]},"submitLabel":"Lanjut"}]}
+If render_cruse returns an error, do NOT call it again with the same component: fix the shape (fields as an object, form with schema.properties) or fall back to plain text. At most two render_cruse attempts per response.
 Do not ask the visitor to confirm an irreversible action, in chat or with a confirm component: the browser asks them when you call the tool. Ask only when a price or fee they agreed to has changed.
 """
         }
