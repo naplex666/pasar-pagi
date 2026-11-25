@@ -13,6 +13,9 @@ import hargaData from "./data/harga.json" with { type: "json" };
 var CART_KEY = "pasar-pagi-cart-v1";
 var ORDERS_KEY = "pasar-pagi-orders-v1";
 var MAX_ORDERS = 5;
+// Situs kurir partner: alamat halaman Antar Pasar. Dipakai untuk link di halaman
+// dan untuk getState(), supaya agen tahu ke mana mengarahkan pengunjung.
+var ANTAR_PASAR_URL = "https://naplex666.github.io/antar-pasar/";
 
 var items = hargaData.barang || [];      // barang dari data/harga.json
 var categories = hargaData.kategori || [];
@@ -105,6 +108,13 @@ function pageText(id) {
   return node ? node.textContent.trim() : "";
 }
 
+// Alamat halaman Antar Pasar: baca dari link di halaman, dengan konstanta sebagai
+// cadangan (di tes Node, link tidak punya href, jadi konstanta yang dipakai).
+function antarPasarUrl() {
+  var link = document.querySelector("#antar-link");
+  return link && link.href ? link.href : ANTAR_PASAR_URL;
+}
+
 function hariIni() {
   var d = new Date();
   var iso = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
@@ -123,6 +133,7 @@ function getState() {
     catatanHarga: "Harga contoh untuk demo.",
     jamBuka: pageText("jam-buka"),
     catatanDemo: pageText("catatan-demo"),
+    antarPasar: { nama: "Antar Pasar", url: antarPasarUrl() },
     items: items.map(function (it) {
       return { id: it.id, nama: it.nama, lapak: it.lapak, kategori: it.kategori, harga: it.harga, satuan: it.satuan, stok: it.stok, keterangan: it.keterangan };
     }),
@@ -410,6 +421,8 @@ function init() {
   var cara = document.querySelector("#cara");
   var alamatWrap = document.querySelector("#alamat-wrap");
   var alamat = document.querySelector("#alamat");
+  var antarLink = document.querySelector("#antar-link");
+  if (antarLink) antarLink.href = ANTAR_PASAR_URL;
 
   cara.addEventListener("change", function () {
     var antar = cara.value === "antar";

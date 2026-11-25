@@ -14,7 +14,7 @@ export class AssistantMount {
   /**
    * Pesan chat pertama setelah pengunjung punya key: apa yang bisa dilakukan asisten di sini.
    */
-  static GREETING = "Halo! Saya bisa bantu cari harga dan stok barang, mengisi keranjang, dan membuat pesanan demo — ambil sendiri atau diantar. Tanya saja, misalnya “cabe rawit sekilo berapa?”";
+  static GREETING = "Halo! Saya bisa bantu cari harga dan stok barang, mengisi keranjang, dan membuat pesanan demo — ambil sendiri atau diantar. Saya juga bisa menanyakan ongkir dan jam antar ke Antar Pasar. Tanya saja, misalnya “cabe rawit sekilo berapa?”";
 
   /**
    * Kata-kata dialog konfirmasi untuk tiap action irreversible. Nama tiap tombol

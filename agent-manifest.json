@@ -17,7 +17,9 @@
     "protocol": "nsdeploy-agent-mcp/v1",
     "reason": "This is a static bundle; a public MCP facade requires an application host."
   },
-  "allowed_peers": [],
+  "allowed_peers": [
+    "https://naplex666.github.io"
+  ],
   "brand": "Pasar Pagi",
   "deployment": {
     "browser_mock": false,
@@ -62,7 +64,8 @@
         "Tambahkan 2 kg beras premium ke keranjang.",
         "Tambahkan 2 kg beras premium dan 1 kg cabe rawit ke keranjang, lalu buatkan pesanan demonya atas nama Budi, ambil sendiri jam 18:00.",
         "Tolong batalkan pesanan demo saya kemarin.",
-        "Saya mau bayar pesanan ini pakai QRIS, bisa?"
+        "Saya mau bayar pesanan ini pakai QRIS, bisa?",
+        "Berapa ongkir antar belanjaan 5 km, dan jam 18:00 masih bisa diantar?"
       ],
       "tags": [
         "agentified-website"
@@ -72,7 +75,7 @@
   "peer_policy": {
     "deny_origins": [],
     "mode": "closed",
-    "note": "Local agents and page-local actions only. No partner sites yet."
+    "note": "Partner site Antar Pasar (delivery fees and time slots) at https://naplex666.github.io/antar-pasar. Closed policy: only allowed_peers may be called."
   },
   "theme": {
     "primary": "#2e5e3a"
